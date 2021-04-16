@@ -58,7 +58,7 @@ int power(int x, int y, int p = MOD) {
     return res;
 }
 
-void printpair(pii& a) { cout << a.fi << " " << a.se << endl; }
+void printpair(pii a) { cout << a.fi << " " << a.se << "\n"; }
 
 void solve() {
 
