@@ -58,6 +58,10 @@ int power(int x, int y, int p = MOD) {
     return res;
 }
 
+int add(int x, int y, int mod = MOD) {return ( (x % mod) + (y % mod)) % mod;}
+int subtract(int x, int y, int mod = MOD) {return ( (x % mod) - (y % mod) + mod) % mod;}
+int multiply(int x, int y, int mod = MOD) {return ( (x % mod) * (y % mod)) % mod;}
+
 void printpair(pii a) { cout << a.fi << " " << a.se << endl; }
 
 void solve() {
@@ -74,4 +78,3 @@ signed main() {
     }
     return 0;
 }
-
