@@ -37,7 +37,7 @@
 using namespace std;
 using namespace __gnu_pbds;
 typedef tree<int, null_type, less<int>, rb_tree_tag,
-                tree_order_statistics_node_update> ordered_set;
+        tree_order_statistics_node_update> ordered_set;
 int MOD = 1e9 + 7;
 
 v ans;
@@ -53,11 +53,11 @@ void sieve(const int n)
     //complexity O(nloglogn)
     vector<bool> isprime(n + 1, 1);
     isprime[1] = 0;
-    for (int i = 2; i*i <= n; ++i)
+    for (int i = 2; i * i <= n; ++i)
     {
         if (isprime[i])
         {
-            for (int j = i*i; j <= n; j += i)
+            for (int j = i * i; j <= n; j += i)
                 isprime[j] = 0;
         }
     }
@@ -65,7 +65,7 @@ void sieve(const int n)
     for (int i = 2; i <= n; ++i)
     {
         if (isprime[i])
-            ans.pb(i * i);
+            ans.pb(i);
     }
 }
 
@@ -76,7 +76,7 @@ signed main()
     cin >> t;
     sieve(1e6);
     while (t--)
-       solve();
+        solve();
     return 0;
 }
 
