@@ -78,7 +78,7 @@ void printpip(pip it) {
 }
 
 void solve() {
-    cout << "xt";
+
 }
 
 signed main() {

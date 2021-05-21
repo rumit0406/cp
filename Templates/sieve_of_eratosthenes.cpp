@@ -48,6 +48,10 @@ void solve()
     binary_search( all(ans), n) ? yes : no;
 }
 
+v digitwise_primes = {0, 7, 11, 101, 1009, 10007, (int) 1e5 + 3,
+                      (int)1e6 + 3, (int)1e7 + 19, (int)1e8 + 7
+                     };
+
 void sieve(const int n)
 {
     //complexity O(nloglogn)
