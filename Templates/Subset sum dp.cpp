@@ -37,6 +37,7 @@ using namespace std;
 using namespace __gnu_pbds;
 typedef tree<int, null_type, less<int>, rb_tree_tag,
         tree_order_statistics_node_update> ordered_set;
+typedef pair<int, pii> pip;
 int MOD = 1e9 + 7, intmax = LLONG_MAX, intmin = LLONG_MIN;
 
 int ncr(int n, int r, int p = MOD) {
@@ -69,6 +70,26 @@ void query(int a, int b) {
 
 void printpair(pii a) {
     cout << a.fi << " " << a.se << endl;
+}
+
+void printpip(pip it) {
+    cout << it.fi << ' ';
+    printpair(it.se);
+}
+
+bool canPartition(v& a, int sum) {
+    // tells if there's a subset in a with sum = sum
+    //works in O(n * sum) time
+    int n = a.size();
+    vb dp(sum + 1, false);
+    dp[0] = true;
+    for (int i = 0; i < n; ++i) {
+        for (int j = sum; j >= a[i]; --j) {
+            if (dp[j - a[i]])
+                dp[j] = true;
+        }
+    }
+    return dp.back();
 }
 
 void solve() {
