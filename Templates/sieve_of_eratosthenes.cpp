@@ -39,22 +39,14 @@ using namespace __gnu_pbds;
 typedef tree<int, null_type, less<int>, rb_tree_tag,
         tree_order_statistics_node_update> ordered_set;
 int MOD = 1e9 + 7;
-
-v ans;
-
-void solve()
-{
-    sci(n);
-    binary_search( all(ans), n) ? yes : no;
-}
-
 v digitwise_primes = {0, 7, 11, 101, 1009, 10007, (int) 1e5 + 3,
                       (int)1e6 + 3, (int)1e7 + 19, (int)1e8 + 7
                      };
-
-void sieve(const int n)
+v primes;
+void sieve(int n = (int) 1e5)
 {
     //complexity O(nloglogn)
+    // gets all primes between [2, n]
     vector<bool> isprime(n + 1, 1);
     isprime[1] = 0;
     for (int i = 2; i * i <= n; ++i)
@@ -69,16 +61,37 @@ void sieve(const int n)
     for (int i = 2; i <= n; ++i)
     {
         if (isprime[i])
-            ans.pb(i);
+            primes.pb(i);
     }
+}
+
+int numOfFactors (int num)
+{
+    int factors = 0;
+    fa(primes) {
+        if (num < it)
+            break;
+        while (num % it == 0) {
+            num /= it;
+            ++factors;
+        }
+    }
+    if (num > 1)
+        factors++;
+    return factors;
+}
+
+void solve()
+{
+
 }
 
 signed main()
 {
     fastio();
+    sieve();
     int t = 1;
     cin >> t;
-    sieve(1e6);
     while (t--)
         solve();
     return 0;
