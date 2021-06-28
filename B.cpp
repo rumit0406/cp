@@ -25,8 +25,6 @@
 #define input(x) for(auto &e:x)cin>>e
 #define fa(x) for(auto it:x)
 #define far(x) for(auto &it:x)
-#define maxele(x) max_element(all(x))
-#define minele(x) min_element(all(x))
 #define sci(x) int x; cin>>x
 #define scii(x,y) int x,y; cin>>x>>y
 #define sciii(x,y,z) int x,y,z; cin>>x>>y>>z
