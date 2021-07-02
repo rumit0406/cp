@@ -29,6 +29,7 @@
 #define scii(x,y) int x,y; cin>>x>>y
 #define sciii(x,y,z) int x,y,z; cin>>x>>y>>z
 #define print(x) fa(x) cout<<it<<" ";cout<<"\n"
+#define numberOfSetBits(x) __builtin_popcountll(x)
 #define yes cout<<"YES\n"
 #define no cout<<"NO\n"
 using namespace std;
