@@ -38,16 +38,7 @@ typedef tree<int, null_type, less<int>, rb_tree_tag,
         tree_order_statistics_node_update> ordered_set;
 int MOD = 1e9 + 7, intmax = LLONG_MAX, intmin = LLONG_MIN;
 
-int ncr(int n, int r, int p = MOD) {
-    if (r > n - r) r = n - r;
-    int C[r + 1]; fill(C, C + r + 1, 0); C[0] = 1;
-    for (int i = 1; i <= n; i++) {
-        for (int j = min(i, r); j > 0; j--) C[j] = (C[j] + C[j - 1]) % p;
-    }
-    return C[r];
-}
-
-int power(int x, int y, int p = MOD) {
+int power(int x, int y, int p = MOD) { //gives x^y, logy time
     int res = 1; x = x % p;
     if (x == 0) return 0;
     while (y > 0) {
@@ -58,12 +49,27 @@ int power(int x, int y, int p = MOD) {
 }
 
 int add(int x, int y, int mod = MOD) {return ( (x % mod) + (y % mod)) % mod;}
-int subtract(int x, int y, int mod = MOD) {return ( (x % mod) - (y % mod) + mod) % mod;}
+int subtract(int x, int y, int mod = MOD) {return ((x % mod) - (y % mod) + mod) % mod;}
 int multiply(int x, int y, int mod = MOD) {return ( (x % mod) * (y % mod)) % mod;}
+int divide(int x, int y, int mod = MOD) { //y and mod must be coprime,log(mod) time
+    x %= mod; y %= mod; int gcd = __gcd(x, y); x /= gcd; y /= gcd;
+    int yinverse = power(y, mod - 2, mod); return (x * yinverse) % mod;
+}
+
+v factorial;
+void computeFactorialTill(int maxn, int mod = MOD) {
+    factorial.assign(maxn + 1, 1);//call this fn in main, O(maxn) time
+    ff(i, maxn)
+    factorial[i] = (i * factorial[i - 1]) % mod;
+}
+
+int ncr(int n, int r, int mod = MOD) {
+    if (r > n - r) r = n - r; //O(maxn) time due to computing factorial
+    return divide(factorial[n], factorial[r] * factorial[n - r], mod);
+}
 
 void query(int a, int b) {
-    cout << "? " << a << ' ' << b << endl;
-    cout.flush();
+    cout << "? " << a << ' ' << b << endl; cout.flush();
 }
 
 void printpair(pii a) {
