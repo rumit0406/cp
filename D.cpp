@@ -5,17 +5,8 @@
 #define int long long
 #define double long double
 #define endl "\n"
-#define v vector<int>
-#define vb vector<bool>
-#define vv vector<vector<int>>
-#define pii pair<int,int>
-#define vp vector<pii>
-#define vs vector<string>
-#define vd vector<double>
-#define mp make_pair
+#define v(x) vector<x>
 #define pb push_back
-#define fi first
-#define se second
 #define all(s) s.begin(),s.end()
 #define sz(x) (int)x.size()
 #define f(i,n) for(int i = 0; i < n; ++i)
@@ -56,7 +47,7 @@ int divide(int x, int y, int mod = MOD) { //y and mod must be coprime,log(mod) t
     int yinverse = power(y, mod - 2, mod); return (x * yinverse) % mod;
 }
 
-v factorial;
+v(int) factorial;
 void computeFactorialTill(int maxn, int mod = MOD) {
     factorial.assign(maxn + 1, 1);//call this fn in main, O(maxn) time
     ff(i, maxn)
@@ -70,10 +61,6 @@ int ncr(int n, int r, int mod = MOD) {
 
 void query(int a, int b) {
     cout << "? " << a << ' ' << b << endl; cout.flush();
-}
-
-void printpair(pii a) {
-    cout << a.fi << " " << a.se << endl;
 }
 
 void solve() {
