@@ -63,32 +63,84 @@ void query(int a, int b) {
     cout << "? " << a << ' ' << b << endl; cout.flush();
 }
 
-void bfs(v& adj[], int n) {
-    v(bool) visited(n, false);
-    queue<int> q;
-    q.push(0);
-    visited[0] = true;
-    while (not q.empty()) {
-        auto node = q.front();
-        q.pop();
-        for (auto nbr : adj[node]) {
-            if (visited[nbr] == false) {
-                visited[nbr] = true;
-                q.push(nbr);
-            }
+class segmentTree {
+public:
+    v(int) a;
+    int n;
+    //just call the constructor to build the tree
+    segmentTree(v(int) &input) {
+        n = sz(input);
+        a.assign(4 * n, 24);
+        build(input, 0, 0, n - 1);
+    }
+
+    int query(int rangeLb, int rangeUb) {
+        //can't handle invalid queries
+        return queryUtil(0, n - 1, 0, rangeLb, rangeUb);
+    }
+
+    void update(int idx, int val) {
+        //can't handle invalid queries
+        updateUtil(0, n - 1, 0, idx, val);
+    }
+
+    void build(v(int) &input, int treeIdx, int lo, int hi) {
+        if (lo == hi)
+            a[treeIdx] = input[lo];
+        else {
+            int mid = lo + (hi - lo) / 2;
+            int leftTree = 2 * treeIdx + 1, rightTree = leftTree + 1;
+            build(input, leftTree, lo, mid);
+            build(input, rightTree, mid + 1, hi);
+            //RMQ, change as per needs
+            a[treeIdx] = min(a[leftTree], a[rightTree]);
         }
     }
-}
+
+    int queryUtil(int lo, int hi, int treeIdx, int rangeLb, int rangeUb) {
+        if (lo == rangeLb and hi == rangeUb)
+            return a[treeIdx];
+        int mid = lo + (hi - lo) / 2;
+        if (rangeUb <= mid) //only left
+            return queryUtil(lo, mid, 2 * treeIdx + 1, rangeLb, min(mid, rangeUb));
+        else if (rangeLb > mid) //only right
+            return queryUtil(mid + 1, hi, 2 * treeIdx + 2, max(mid + 1, rangeLb), rangeUb);
+        else //RMQ, change as per needs
+            return min(queryUtil(lo, mid, 2 * treeIdx + 1, rangeLb, min(mid, rangeUb)),
+                       queryUtil(mid + 1, hi, 2 * treeIdx + 2, max(mid + 1, rangeLb), rangeUb));
+    }
+
+    void updateUtil(int lo, int hi, int treeIdx, int idx, int val) {
+        if (lo == idx and hi == idx) {
+            a[treeIdx] = val;
+            return;
+        }
+        int mid = lo + (hi - lo) / 2;
+        if (idx <= mid) //left
+            updateUtil(lo, mid, 2 * treeIdx + 1, idx, val);
+        else //right
+            updateUtil(mid + 1, hi, 2 * treeIdx + 2, idx, val);
+        //RMQ, change as per needs
+        a[treeIdx] = min(a[2 * treeIdx + 1], a[2 * treeIdx + 2]);
+    }
+};
 
 void solve() {
-    scii(n, e);
-    v(int) adj[n];
-    f(i, e) {
-        scii(x, y);
-        adj[x].pb(y);
-        adj[y].pb(x);
+    scii(n, k);
+    v(int) a(n);
+    input(a);
+    segmentTree tree(a);
+    while (k--) {
+        sci(q);
+        if (q == 1) {
+            scii(idx, val);
+            tree.update(idx - 1, val);
+        }
+        else {
+            scii(lo, hi);
+            cout << tree.query(lo - 1, hi - 1) << endl;
+        }
     }
-    bfs(adj, n);
 }
 
 signed main() {
@@ -96,7 +148,7 @@ signed main() {
     int t = 1;
     cin >> t;
     ff(i, t) {
-        // cout << "Case #" << i << ": ";
+        // cout << "Case #" << i << ": \n";
         solve();
     }
     return 0;

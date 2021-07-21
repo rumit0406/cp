@@ -39,10 +39,10 @@ using namespace __gnu_pbds;
 typedef tree<int, null_type, less<int>, rb_tree_tag,
         tree_order_statistics_node_update> ordered_set;
 int MOD = 1e9 + 7;
-v digitwise_primes = {0, 7, 11, 101, 1009, 10007, (int) 1e5 + 3,
-                      (int)1e6 + 3, (int)1e7 + 19, (int)1e8 + 7
-                     };
-v primes;
+v(int) digitwise_primes = {0, 7, 11, 101, 1009, 10007, (int) 1e5 + 3,
+                           (int)1e6 + 3, (int)1e7 + 19, (int)1e8 + 7
+                          };
+v(int) primes;
 void sieve(int n = (int) 1e5)
 {
     //complexity O(nloglogn)
