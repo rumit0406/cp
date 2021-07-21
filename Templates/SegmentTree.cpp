@@ -70,7 +70,7 @@ public:
     //just call the constructor to build the tree
     segmentTree(v(int) &input) {
         n = sz(input);
-        a.assign(4 * n, 24);
+        a.assign(4 * n, -1); //mind it
         build(input, 0, 0, n - 1);
     }
 
