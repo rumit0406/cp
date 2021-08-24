@@ -43,23 +43,19 @@ v(int) digitwise_primes = {0, 7, 11, 101, 1009, 10007, (int) 1e5 + 3,
                            (int)1e6 + 3, (int)1e7 + 19, (int)1e8 + 7
                           };
 v(int) primes;
-void sieve(int n = (int) 1e5)
-{
+void sieve(int n = (int) 1e5) {
     //complexity O(nloglogn)
     // gets all primes between [2, n]
     vector<bool> isprime(n + 1, 1);
     isprime[1] = 0;
-    for (int i = 2; i * i <= n; ++i)
-    {
-        if (isprime[i])
-        {
+    for (int i = 2; i * i <= n; ++i) {
+        if (isprime[i]) {
             for (int j = i * i; j <= n; j += i)
                 isprime[j] = 0;
         }
     }
     //edit this loop as per needs
-    for (int i = 2; i <= n; ++i)
-    {
+    for (int i = 2; i <= n; ++i) {
         if (isprime[i])
             primes.pb(i);
     }
