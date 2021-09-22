@@ -63,14 +63,26 @@ void query(int a, int b) {
     cout << "? " << a << ' ' << b << endl; cout.flush();
 }
 
-void solve() {
+void print1d(v(int) a) {
+    fa(a)
+    cout << it << " ";
+    cout << endl;
+}
 
+void print2d(v(v(int)) &a) {
+    fa(a) {
+        print(it);
+    }
+}
+
+void solve() {
+    
 }
 
 signed main() {
     fastio();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     ff(i, t) {
         // cout << "Case #" << i << ": \n";
         solve();
