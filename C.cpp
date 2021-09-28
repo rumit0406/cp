@@ -76,13 +76,13 @@ void print2d(v(v(int)) &a) {
 }
 
 void solve() {
-    
+
 }
 
 signed main() {
     fastio();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     ff(i, t) {
         // cout << "Case #" << i << ": \n";
         solve();

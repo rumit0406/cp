@@ -61,6 +61,23 @@ void sieve(int n = (int) 1e5) {
     }
 }
 
+v(int) getPrimeFactors (int num)
+{
+    v(int) ans;
+    fa(primes) {
+        if (num < it)
+            break;
+        if (num % it != 0)
+            continue;
+        ans.pb(it);
+        while (num % it == 0)
+            num /= it;
+    }
+    if (num > 1)
+        ans.pb(num);
+    return ans;
+}
+
 int numOfFactors (int num)
 {
     int factors = 0;
