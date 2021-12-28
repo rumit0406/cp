@@ -20,7 +20,8 @@
 #define scii(x,y) int x,y; cin>>x>>y
 #define sciii(x,y,z) int x,y,z; cin>>x>>y>>z
 #define print(x) fa(x) cout<<it<<" ";cout<<"\n"
-#define numberOfSetBits(x) __builtin_popcountll(x)
+#define fi first
+#define se second
 #define yes cout<<"YES\n"
 #define no cout<<"NO\n"
 using namespace std;
@@ -30,49 +31,49 @@ typedef tree<int, null_type, less<int>, rb_tree_tag,
 int MOD = 1e9 + 7, intmax = LLONG_MAX, intmin = LLONG_MIN;
 
 int power(int x, int y, int p = MOD) { //gives x^y, logy time
-    int res = 1; x = x % p;
-    if (x == 0) return 0;
-    while (y > 0) {
-        if (y & 1) res = (res * x) % p;
-        y = y >> 1; x = (x * x) % p;
-    }
-    return res;
+	int res = 1; x = x % p;
+	if (x == 0) return 0;
+	while (y > 0) {
+		if (y & 1) res = (res * x) % p;
+		y = y >> 1; x = (x * x) % p;
+	}
+	return res;
 }
 
 int add(int x, int y, int mod = MOD) {return ( (x % mod) + (y % mod)) % mod;}
 int subtract(int x, int y, int mod = MOD) {return ((x % mod) - (y % mod) + mod) % mod;}
 int multiply(int x, int y, int mod = MOD) {return ( (x % mod) * (y % mod)) % mod;}
 int divide(int x, int y, int mod = MOD) { //y and mod must be coprime,log(mod) time
-    x %= mod; y %= mod; int gcd = __gcd(x, y); x /= gcd; y /= gcd;
-    int yinverse = power(y, mod - 2, mod); return (x * yinverse) % mod;
+	x %= mod; y %= mod; int gcd = __gcd(x, y); x /= gcd; y /= gcd;
+	int yinverse = power(y, mod - 2, mod); return (x * yinverse) % mod;
 }
 
 v(int) factorial;
 void computeFactorialTill(int maxn, int mod = MOD) {
-    factorial.assign(maxn + 1, 1);//call this fn in main, O(maxn) time
-    ff(i, maxn)
-    factorial[i] = (i * factorial[i - 1]) % mod;
+	factorial.assign(maxn + 1, 1);//call this fn in main, O(maxn) time
+	ff(i, maxn)
+	factorial[i] = (i * factorial[i - 1]) % mod;
 }
 
 int ncr(int n, int r, int mod = MOD) {
-    if (r > n - r) r = n - r; //O(maxn) time due to computing factorial
-    return divide(factorial[n], factorial[r] * factorial[n - r], mod);
+	if (r > n - r) r = n - r; //O(maxn) time due to computing factorial
+	return divide(factorial[n], factorial[r] * factorial[n - r], mod);
 }
 
 void query(int a, int b) {
-    cout << "? " << a << ' ' << b << endl; cout.flush();
+	cout << "? " << a << ' ' << b << endl; cout.flush();
 }
 
 void print1d(v(int) a) {
-    fa(a)
-    cout << it << " ";
-    cout << endl;
+	fa(a)
+	cout << it << " ";
+	cout << endl;
 }
 
 void print2d(v(v(int)) &a) {
-    fa(a) {
-        print(it);
-    }
+	fa(a) {
+		print(it);
+	}
 }
 
 void solve() {
@@ -80,12 +81,12 @@ void solve() {
 }
 
 signed main() {
-    fastio();
-    int t = 1;
-    cin >> t;
-    ff(i, t) {
-        // cout << "Case #" << i << ": \n";
-        solve();
-    }
-    return 0;
+	fastio();
+	int t = 1;
+	cin >> t;
+	ff(i, t) {
+		// cout << "Case #" << i << ": \n";
+		solve();
+	}
+	return 0;
 }
