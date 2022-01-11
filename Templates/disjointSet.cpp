@@ -56,7 +56,6 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define sci(x) int x; cin>>x
 #define scii(x,y) int x,y; cin>>x>>y
 #define sciii(x,y,z) int x,y,z; cin>>x>>y>>z
-#define print(x) fa(x)cout<<it<<" ";cout<<"\n"
 #define fi first
 #define se second
 #define yes cout<<"YES\n"
@@ -106,6 +105,35 @@ void query(int a, int b) {
     cout << "? " << a << ' ' << b << endl;
     cout.flush();
 }
+
+class disjointSet {
+public:
+    int n;
+    vector<int> parent, rank;
+
+    disjointSet(int sz) {
+        n = sz;
+        parent.resize(n);
+        rank.assign(n, 1);
+        iota(parent.begin(), parent.end(), 0ll);
+    }
+
+    int find(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = find(parent[node]);
+    }
+
+    void merge(int x, int y) {
+        x = find(x), y = find(y);
+        if (x != y) {
+            if (rank[x] < rank[y])
+                swap(x, y);
+            parent[y] = x;
+            rank[x]++;
+        }
+    }
+};
 
 void solve() {
 

@@ -56,6 +56,7 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define sci(x) int x; cin>>x
 #define scii(x,y) int x,y; cin>>x>>y
 #define sciii(x,y,z) int x,y,z; cin>>x>>y>>z
+#define print(x) fa(x)cout<<it<<" ";cout<<"\n"
 #define fi first
 #define se second
 #define yes cout<<"YES\n"
