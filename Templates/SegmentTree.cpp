@@ -63,12 +63,54 @@ void query(int a, int b) {
     cout << "? " << a << ' ' << b << endl; cout.flush();
 }
 
-class segmentTree {
-public:
+class SegmentTree {
     v(int) a;
     int n;
     //just call the constructor to build the tree
-    segmentTree(v(int) &input) {
+
+    void build(v(int) &input, int treeIdx, int lo, int hi) {
+        if (lo == hi)
+            a[treeIdx] = input[lo];
+        else {
+            int mid = lo + (hi - lo) / 2;
+            int leftTree = 2 * treeIdx + 1, rightTree = leftTree + 1;
+            build(input, leftTree, lo, mid);
+            build(input, rightTree, mid + 1, hi);
+            //GCD, change as per needs
+            a[treeIdx] = __gcd(a[leftTree], a[rightTree]);
+        }
+    }
+
+    int queryUtil(int lo, int hi, int treeIdx, int rangeLb, int rangeUb) {
+        if (lo == rangeLb and hi == rangeUb)
+            return a[treeIdx];
+        int mid = lo + (hi - lo) / 2;
+        if (rangeUb <= mid) //only left
+            return queryUtil(lo, mid, 2 * treeIdx + 1, rangeLb, min(mid, rangeUb));
+        else if (rangeLb > mid) //only right
+            return queryUtil(mid + 1, hi, 2 * treeIdx + 2, max(mid + 1, rangeLb), rangeUb);
+        else //GCD, change as per needs
+            return __gcd(queryUtil(lo, mid, 2 * treeIdx + 1, rangeLb, min(mid, rangeUb)),
+                         queryUtil(mid + 1, hi, 2 * treeIdx + 2, max(mid + 1, rangeLb), rangeUb));
+    }
+
+    void updateUtil(int lo, int hi, int treeIdx, int idx, int val) {
+        if (lo == idx and hi == idx) {
+            a[treeIdx] = val;
+            return;
+        }
+        int mid = lo + (hi - lo) / 2;
+        if (idx <= mid) //left
+            updateUtil(lo, mid, 2 * treeIdx + 1, idx, val);
+        else //right
+            updateUtil(mid + 1, hi, 2 * treeIdx + 2, idx, val);
+        //GCD, change as per needs
+        a[treeIdx] = __gcd(a[2 * treeIdx + 1], a[2 * treeIdx + 2]);
+    }
+
+public:
+
+    SegmentTree(v(int) &input) {
         n = sz(input);
         a.assign(4 * n, -1); //mind it
         build(input, 0, 0, n - 1);
@@ -83,64 +125,10 @@ public:
         //can't handle invalid queries
         updateUtil(0, n - 1, 0, idx, val);
     }
-
-    void build(v(int) &input, int treeIdx, int lo, int hi) {
-        if (lo == hi)
-            a[treeIdx] = input[lo];
-        else {
-            int mid = lo + (hi - lo) / 2;
-            int leftTree = 2 * treeIdx + 1, rightTree = leftTree + 1;
-            build(input, leftTree, lo, mid);
-            build(input, rightTree, mid + 1, hi);
-            //RMQ, change as per needs
-            a[treeIdx] = min(a[leftTree], a[rightTree]);
-        }
-    }
-
-    int queryUtil(int lo, int hi, int treeIdx, int rangeLb, int rangeUb) {
-        if (lo == rangeLb and hi == rangeUb)
-            return a[treeIdx];
-        int mid = lo + (hi - lo) / 2;
-        if (rangeUb <= mid) //only left
-            return queryUtil(lo, mid, 2 * treeIdx + 1, rangeLb, min(mid, rangeUb));
-        else if (rangeLb > mid) //only right
-            return queryUtil(mid + 1, hi, 2 * treeIdx + 2, max(mid + 1, rangeLb), rangeUb);
-        else //RMQ, change as per needs
-            return min(queryUtil(lo, mid, 2 * treeIdx + 1, rangeLb, min(mid, rangeUb)),
-                       queryUtil(mid + 1, hi, 2 * treeIdx + 2, max(mid + 1, rangeLb), rangeUb));
-    }
-
-    void updateUtil(int lo, int hi, int treeIdx, int idx, int val) {
-        if (lo == idx and hi == idx) {
-            a[treeIdx] = val;
-            return;
-        }
-        int mid = lo + (hi - lo) / 2;
-        if (idx <= mid) //left
-            updateUtil(lo, mid, 2 * treeIdx + 1, idx, val);
-        else //right
-            updateUtil(mid + 1, hi, 2 * treeIdx + 2, idx, val);
-        //RMQ, change as per needs
-        a[treeIdx] = min(a[2 * treeIdx + 1], a[2 * treeIdx + 2]);
-    }
 };
 
 void solve() {
-    scii(n, k);
-    v(int) a(n);
-    input(a);
-    segmentTree tree(a);
-    while (k--) {
-        sci(q);
-        if (q == 1) {
-            scii(idx, val);
-            tree.update(idx - 1, val);
-        }
-        else {
-            scii(lo, hi);
-            cout << tree.query(lo - 1, hi - 1) << endl;
-        }
-    }
+
 }
 
 signed main() {
