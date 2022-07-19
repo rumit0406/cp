@@ -130,7 +130,8 @@ public:
             if (rank[x] < rank[y])
                 swap(x, y);
             parent[y] = x;
-            rank[x]++;
+            if (rank[x] == rank[y])
+                rank[x]++;
         }
     }
 };
